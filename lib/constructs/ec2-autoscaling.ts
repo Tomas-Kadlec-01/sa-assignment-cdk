@@ -41,6 +41,7 @@ export class CustomAutoScalingGroup {
         ),
         // allows ec2 instance to access secrets maanger and retrieve secrets
         iam.ManagedPolicy.fromAwsManagedPolicyName('SecretsManagerReadWrite'),
+        iam.ManagedPolicy.fromAwsManagedPolicyName('AmazonS3FullAccess')
       ],
     })
 
@@ -81,7 +82,7 @@ export class CustomAutoScalingGroup {
         generation: ec2.AmazonLinuxGeneration.AMAZON_LINUX_2,
       }),
       userData: ec2.UserData.custom(userScript),
-      minCapacity: 1,
+      minCapacity: config.minSize,
       maxCapacity: config.maxSize,
       associatePublicIpAddress: true,
       vpcSubnets: { subnetType: ec2.SubnetType.PUBLIC },

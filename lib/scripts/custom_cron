@@ -1,0 +1,1 @@
+*/1 * * * * ssm-user /tmp/custom_schedule.sh > /home/ssm-user/logs/backup.log 2>&1

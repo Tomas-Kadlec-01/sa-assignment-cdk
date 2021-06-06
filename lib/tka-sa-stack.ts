@@ -2,6 +2,7 @@ import * as cdk from '@aws-cdk/core'
 import { CustomVPC } from './constructs/vpc'
 import { CustomAutoScalingGroup } from './constructs/ec2-autoscaling'
 import { CustomApplicationLoadBalancer } from './constructs/alb'
+import { CustomS3, } from './constructs/s3'
 import { config } from './config'
 
 export class TKaSaStack extends cdk.Stack {
@@ -15,8 +16,10 @@ export class TKaSaStack extends cdk.Stack {
       cidr: '172.22.0.0/16',
     })
 
-  
-
+    
+    const customS3 = new CustomS3(this)
+    
+    
     // Application Loadbalancer -- for our single instance
     const { loadBalancerDnsName, listener } = new CustomApplicationLoadBalancer(this, {
       prefix: config.projectName,
@@ -38,6 +41,7 @@ export class TKaSaStack extends cdk.Stack {
       port: 80,
       targets: [asg]
     })
+    
     
   }
 }
